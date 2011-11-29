@@ -40,7 +40,7 @@ Vex.Flow.RaphaelContext.prototype.init = function(element) {
   this.state_stack= [];
   
   this.isDrawingStaff = false;
-  this.staff_lines = [];
+  this.staff_lines = this.paper.set();
 }
 
 Vex.Flow.RaphaelContext.prototype.setFont = function(family, size, weight) {
