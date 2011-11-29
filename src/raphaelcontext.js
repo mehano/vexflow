@@ -15,7 +15,7 @@ Vex.Flow.RaphaelContext.prototype.init = function(element) {
   this.paper = Raphael(element);
   this.path = "";
   this.pen = {x: 0, y: 0};
-
+  
   this.state = {
     scale: { x: 1, y: 1 },
     font_family: "Arial",
@@ -38,6 +38,8 @@ Vex.Flow.RaphaelContext.prototype.init = function(element) {
   };
 
   this.state_stack= [];
+  
+  this.staff_lines = [];
 }
 
 Vex.Flow.RaphaelContext.prototype.setFont = function(family, size, weight) {
@@ -92,10 +94,22 @@ Vex.Flow.RaphaelContext.prototype.fillRect = function(x, y, width, height) {
     y += height;
     height = -height
   }
-
   var r = this.paper.rect(x, y, width - 0.5, height - 0.5).
     attr(this.attributes);
+  if (this.isDrawingStaff) {
+    this.staff_lines.push(r);
+  }
   return this;
+}
+
+// Used for creating event handlers on staff lines
+Vex.Flow.RaphaelContext.prototype.beginStaffRegion = function() { 
+  this.staff_lines.length = 0;
+  this.isDrawingStaff = true; 
+}
+
+Vex.Flow.RaphaelContext.prototype.endStaffRegion = function() {
+  this.isDrawingStaff = false;
 }
 
 Vex.Flow.RaphaelContext.prototype.clearRect = function(x, y, width, height) {
