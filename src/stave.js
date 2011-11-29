@@ -149,10 +149,12 @@ Vex.Flow.Stave.prototype.draw = function(context) {
 
   this.drawVerticalBar(0);
 
+  this.context.beginStaffRegion();
   for (var line=0; line < num_lines; line++) {
     var y = this.getYForLine(line);
     this.context.fillRect(x, y, width, 1);
   }
+  this.context.endStaffRegion();
 
   x = this.glyph_start_x;
   for (var i = 0; i < this.glyphs.length; ++i) {
